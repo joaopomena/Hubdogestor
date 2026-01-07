@@ -32,12 +32,12 @@
             </a>
         </div>
         
-        <nav class="max-w-md mx-auto flex overflow-x-auto hide-scroll border-t border-slate-50 bg-white">
+        <nav class="max-w-md mx-auto flex overflow-x-auto hide-scroll border-t border-slate-50 bg-white shadow-inner">
             <button onclick="openTab('taxa')" id="btn-taxa" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 active-tab transition-all">Taxa Meta</button>
+            <button onclick="openTab('mmf')" id="btn-mmf" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">Lucro MMF</button>
             <button onclick="openTab('pacing')" id="btn-pacing" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">Pacing</button>
-            <button onclick="openTab('video')" id="btn-video" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">Criativos</button>
-            <button onclick="openTab('roas')" id="btn-roas" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">Breakeven</button>
-            <button onclick="openTab('mer')" id="btn-mer" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">MER</button>
+            <button onclick="openTab('video')" id="btn-video" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">Vídeo</button>
+            <button onclick="openTab('roas')" id="btn-roas" class="whitespace-nowrap px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400 transition-all">ROAS</button>
         </nav>
     </header>
 
@@ -49,17 +49,17 @@
                     <div class="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200">
                         <i data-lucide="calculator" class="text-white w-7 h-7"></i>
                     </div>
-                    <h1 class="text-xl font-extrabold text-slate-800">Cálculo de Impostos</h1>
-                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Atualizado Janeiro 2026</p>
+                    <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">Cálculo de Impostos</h1>
+                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Meta Ads 2026</p>
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 ml-1 text-center">Valor do Orçamento de Mídia</label>
-                        <div class="relative group">
-                            <span class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xl group-focus-within:text-blue-500 transition-colors">R$</span>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 text-center italic">Valor Original do Investimento</label>
+                        <div class="relative">
+                            <span class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xl group-focus-within:text-blue-500">R$</span>
                             <input type="number" id="taxInput" oninput="calcTax()" placeholder="0,00" 
-                                class="w-full pl-16 pr-6 py-6 bg-slate-50 border-2 border-slate-100 rounded-[2rem] text-3xl font-black text-slate-700 focus:border-blue-500 focus:bg-white outline-none transition-all shadow-inner">
+                                class="w-full pl-16 pr-6 py-6 bg-slate-50 border-2 border-slate-100 rounded-[2rem] text-3xl font-black text-slate-700 focus:border-blue-500 outline-none transition-all shadow-inner">
                         </div>
                     </div>
 
@@ -72,24 +72,60 @@
                             <div class="border-t border-slate-800 my-6"></div>
                             <div class="flex justify-between items-end">
                                 <div>
-                                    <span class="text-slate-500 text-[10px] block font-black uppercase tracking-[0.2em] mb-1">Total a Pagar</span>
-                                    <span class="text-4xl font-black text-blue-400 tracking-tighter" id="taxTotal">R$ 0,00</span>
+                                    <span class="text-slate-500 text-[10px] block font-black uppercase tracking-[0.2em] mb-1">Total na Fatura</span>
+                                    <span class="text-4xl font-black text-blue-400 tracking-tighter leading-none" id="taxTotal">R$ 0,00</span>
                                 </div>
-                                <button onclick="copyTax()" class="bg-blue-600 hover:bg-blue-500 p-4 rounded-2xl transition-all active:scale-90 group shadow-xl shadow-blue-900/40">
-                                    <i data-lucide="copy" class="w-6 h-6 text-white group-hover:rotate-12 transition-transform"></i>
+                                <button onclick="copyTax()" class="bg-blue-600 hover:bg-blue-500 p-4 rounded-2xl transition-all active:scale-90 shadow-xl">
+                                    <i data-lucide="copy" class="w-6 h-6 text-white"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="absolute -right-8 -top-8 w-32 h-32 bg-blue-500 opacity-10 rounded-full blur-3xl"></div>
                     </div>
 
                     <div class="bg-amber-50 border border-amber-100 rounded-[1.5rem] p-5 flex gap-4">
-                        <div class="bg-amber-100 p-2 h-fit rounded-lg">
-                            <i data-lucide="info" class="text-amber-600 w-5 h-5"></i>
-                        </div>
-                        <p class="text-[11px] text-amber-900 leading-relaxed font-medium">
-                            <strong>Nota Fiscal Meta:</strong> Em 2026, o repasse de PIS/COFINS (9,25%) e ISS (~3%) é automático sobre o valor bruto investido.
+                        <i data-lucide="info" class="text-amber-600 w-5 h-5 shrink-0"></i>
+                        <p class="text-[11px] text-amber-900 leading-relaxed font-medium italic">
+                            O repasse de PIS/COFINS e ISS é automático sobre o valor bruto em 2026. Use este valor para cobrança ao cliente.
                         </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mmf" class="tab-content space-y-6">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
+                <div class="text-center mb-6">
+                    <i data-lucide="wallet" class="w-10 h-10 text-indigo-500 mx-auto mb-3"></i>
+                    <h2 class="text-xl font-black text-slate-800 italic">Cálculo MMF</h2>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Lucro Real da Operação</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Vendas (R$)</label>
+                            <input type="number" id="mmfVendas" oninput="calcMMF()" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Margem Prod. (%)</label>
+                            <input type="number" id="mmfMargem" oninput="calcMMF()" placeholder="Ex: 40" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-indigo-500 outline-none">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Ads Investido</label>
+                            <input type="number" id="mmfAds" oninput="calcMMF()" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Seu FEE (Agência)</label>
+                            <input type="number" id="mmfFee" oninput="calcMMF()" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-indigo-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div id="mmfResultBox" class="hidden rounded-[2.5rem] p-8 text-white text-center shadow-lg transition-all">
+                        <span id="mmfLabel" class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80"></span>
+                        <div id="mmfValue" class="text-5xl font-black my-2 tracking-tighter">R$ 0,00</div>
+                        <p class="text-[10px] italic font-medium opacity-90 mt-2">Valor líquido após custos de produto, mídia e agência.</p>
                     </div>
                 </div>
             </div>
@@ -98,91 +134,56 @@
         <div id="pacing" class="tab-content space-y-6">
             <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200 text-center">
                 <i data-lucide="timer" class="w-10 h-10 text-blue-500 mx-auto mb-4"></i>
-                <h2 class="text-xl font-black text-slate-800 mb-6">Controle de Pacing</h2>
+                <h2 class="text-xl font-black text-slate-800">Pacing de Verba</h2>
                 <div class="space-y-4">
-                    <input type="number" id="pTotal" oninput="calcPacing()" placeholder="Verba Total do Mês" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold focus:border-blue-500 outline-none">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="pGasto" oninput="calcPacing()" placeholder="Já Gastou" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold focus:border-blue-500 outline-none">
-                        <input type="number" id="pDia" oninput="calcPacing()" placeholder="Dia Atual" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold focus:border-blue-500 outline-none">
+                    <input type="number" id="pTotal" oninput="calcPacing()" placeholder="Verba Total" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-blue-500 outline-none">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="number" id="pGasto" oninput="calcPacing()" placeholder="Gasto Atual" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-blue-500 outline-none">
+                        <input type="number" id="pDia" oninput="calcPacing()" placeholder="Dia do Mês" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold focus:border-blue-500 outline-none">
                     </div>
-                    <div id="pacingBox" class="hidden bg-slate-900 rounded-[2rem] p-7 text-white mt-4">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Gasto Diário Recomendado</span>
-                        <div id="pIdeal" class="text-4xl font-black text-blue-400 my-2">R$ 0,00</div>
-                        <div id="pStatus" class="text-[10px] py-1.5 px-6 rounded-full inline-block font-black uppercase tracking-wider"></div>
+                    <div id="pacingBox" class="hidden bg-slate-900 rounded-[2rem] p-6 text-white mt-4">
+                        <div id="pIdeal" class="text-3xl font-black text-blue-400">R$ 0,00</div>
+                        <div id="pStatus" class="text-[10px] py-1 px-4 rounded-full inline-block font-black mt-2"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="video" class="tab-content space-y-6">
-            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
-                <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2"><i data-lucide="play" class="text-rose-500"></i> Métricas de Vídeo</h2>
-                <div class="space-y-4 text-center">
-                    <div class="grid grid-cols-2 gap-4">
-                        <input type="number" id="vImp" oninput="calcVid()" placeholder="Impressões" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold outline-none focus:border-rose-500">
-                        <input type="number" id="vPlays" oninput="calcVid()" placeholder="Plays 3s" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold outline-none focus:border-rose-500">
-                    </div>
-                    <div class="bg-rose-50 rounded-[2rem] p-8 grid grid-cols-2 gap-6 border border-rose-100">
-                        <div>
-                            <span class="text-[10px] font-black text-rose-400 uppercase tracking-widest">Hook Rate</span>
-                            <div id="resHook" class="text-4xl font-black text-rose-600">0%</div>
-                            <p class="text-[9px] text-rose-400 mt-1 font-bold">Stop Power</p>
-                        </div>
-                        <div class="border-l border-rose-200">
-                            <span class="text-[10px] font-black text-rose-400 uppercase tracking-widest">Hold Rate</span>
-                            <div id="resHold" class="text-4xl font-black text-rose-600">0%</div>
-                            <p class="text-[9px] text-rose-400 mt-1 font-bold">Retenção</p>
-                        </div>
-                    </div>
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200 text-center">
+                <h2 class="text-xl font-black text-slate-800 mb-6">Performance Criativo</h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="vImp" oninput="calcVid()" placeholder="Impressões" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                    <input type="number" id="v3s" oninput="calcVid()" placeholder="Plays 3s" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                </div>
+                <div class="mt-6 bg-rose-50 p-6 rounded-[2rem] border border-rose-100 grid grid-cols-2 gap-4">
+                    <div><span class="text-[10px] font-bold uppercase text-rose-400">Hook Rate</span><div id="rHook" class="text-3xl font-black text-rose-600">0%</div></div>
+                    <div><span class="text-[10px] font-bold uppercase text-rose-400">Hold Rate</span><div id="rHold" class="text-3xl font-black text-rose-600">0%</div></div>
                 </div>
             </div>
         </div>
 
         <div id="roas" class="tab-content space-y-6">
             <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200 text-center">
-                <i data-lucide="target" class="w-10 h-10 text-emerald-500 mx-auto mb-4"></i>
-                <h2 class="text-xl font-black text-slate-800 mb-6">ROAS Mínimo</h2>
-                <div class="space-y-4">
-                    <input type="number" id="rPreco" oninput="calcRoas()" placeholder="Preço de Venda" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold outline-none">
-                    <input type="number" id="rCusto" oninput="calcRoas()" placeholder="Custo do Produto (CMV)" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold outline-none focus:border-emerald-500">
-                    <div class="bg-emerald-600 rounded-[2.5rem] p-10 text-white shadow-lg shadow-emerald-100">
-                        <span class="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Seu Breakeven é</span>
-                        <div id="resRoas" class="text-6xl font-black my-2">0.0</div>
-                        <p class="text-xs font-medium opacity-90 italic">Abaixo disso você tem prejuízo.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="mer" class="tab-content space-y-6">
-            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-200">
-                <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center justify-center gap-2">
-                    <i data-lucide="bar-chart-3" class="text-indigo-500"></i> MER Global
-                </h2>
-                <div class="space-y-4">
-                    <input type="number" id="merFat" oninput="calcMer()" placeholder="Faturamento Total Loja" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold outline-none focus:border-indigo-500">
-                    <input type="number" id="merInv" oninput="calcMer()" placeholder="Investimento em Mídia" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold outline-none focus:border-indigo-500">
-                    <div class="bg-indigo-950 rounded-[2rem] p-8 text-white text-center">
-                        <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400">Marketing Efficiency Ratio</span>
-                        <div id="resMer" class="text-5xl font-black my-2 text-indigo-300">0.0</div>
-                    </div>
+                <h2 class="text-xl font-black text-slate-800 mb-6 italic">Breakeven ROAS</h2>
+                <input type="number" id="rPre" oninput="calcRoas()" placeholder="Preço" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold mb-4">
+                <input type="number" id="rCus" oninput="calcRoas()" placeholder="Custo (CMV)" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                <div class="bg-emerald-600 rounded-[2rem] p-8 mt-6 text-white">
+                    <div id="resRoas" class="text-6xl font-black">0.0</div>
+                    <p class="text-[10px] font-bold uppercase mt-2">ROAS Mínimo de Equilíbrio</p>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <footer class="text-center mt-12 px-6">
-        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.4em] mb-6">Criado para Gestores de Elite</p>
+    <footer class="text-center px-6">
         <a href="https://instagram.com/joaopomena" target="_blank" 
-           class="inline-flex items-center gap-4 bg-white border border-slate-200 px-8 py-4 rounded-[2rem] shadow-xl hover:shadow-2xl transition-all active:scale-95 group">
-            <span class="bg-gradient-to-tr from-yellow-400 via-rose-500 to-purple-600 w-10 h-10 rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform">
+           class="inline-flex items-center gap-4 bg-white border border-slate-200 px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all active:scale-95 group">
+            <span class="bg-gradient-to-tr from-yellow-400 via-rose-500 to-purple-600 w-10 h-10 rounded-xl flex items-center justify-center">
                 <i data-lucide="instagram" class="text-white w-6 h-6"></i>
             </span>
-            <div class="text-left">
-                <span class="text-slate-400 text-[10px] block font-bold uppercase leading-none mb-1">Me siga no Instagram</span>
-                <span class="text-slate-800 font-black text-lg">@joaopomena</span>
-            </div>
+            <span class="text-slate-800 font-black text-lg">@joaopomena</span>
         </a>
     </footer>
 
@@ -199,6 +200,32 @@
 
         const fmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
+        // LOGICA MMF (NOVA)
+        function calcMMF() {
+            const vendas = parseFloat(document.getElementById('mmfVendas').value) || 0;
+            const margem = (parseFloat(document.getElementById('mmfMargem').value) || 0) / 100;
+            const ads = parseFloat(document.getElementById('mmfAds').value) || 0;
+            const fee = parseFloat(document.getElementById('mmfFee').value) || 0;
+            
+            if(vendas > 0) {
+                const mmf = (vendas * margem) - ads - fee;
+                const box = document.getElementById('mmfResultBox');
+                const label = document.getElementById('mmfLabel');
+                const val = document.getElementById('mmfValue');
+
+                box.classList.remove('hidden');
+                val.innerText = fmt.format(mmf);
+
+                if(mmf > 0) {
+                    box.className = "rounded-[2.5rem] p-8 text-white text-center shadow-lg bg-emerald-600 mt-4";
+                    label.innerText = "🚨 LUCRO REAL (MMF POSITIVO)";
+                } else {
+                    box.className = "rounded-[2.5rem] p-8 text-white text-center shadow-lg bg-rose-600 mt-4";
+                    label.innerText = "⚠️ PREJUÍZO (MMF NEGATIVO)";
+                }
+            }
+        }
+
         // TAXA META (PREMIUM)
         function calcTax() {
             const v = parseFloat(document.getElementById('taxInput').value) || 0;
@@ -208,10 +235,7 @@
         }
         function copyTax() {
             const val = document.getElementById('taxTotal').innerText;
-            if (val !== "R$ 0,00") {
-                navigator.clipboard.writeText(val);
-                alert("🚀 Valor Total Copiado!");
-            }
+            if (val !== "R$ 0,00") { navigator.clipboard.writeText(val); alert("🚀 Total Copiado!"); }
         }
 
         // PACING
@@ -225,34 +249,27 @@
                 document.getElementById('pIdeal').innerText = fmt.format(ideal > 0 ? ideal : 0);
                 const s = document.getElementById('pStatus');
                 const ritmo = (t / 30) * d;
-                if(g > ritmo * 1.05) { s.innerText = "🚨 ACIMA DO RITMO"; s.className = "text-[10px] py-1.5 px-6 rounded-full inline-block font-black bg-red-500 text-white"; }
-                else { s.innerText = "✅ RITMO PERFEITO"; s.className = "text-[10px] py-1.5 px-6 rounded-full inline-block font-black bg-emerald-500 text-white"; }
+                if(g > ritmo * 1.05) { s.innerText = "ALTO"; s.className = "bg-red-500 px-3 py-1 rounded-full text-[9px] font-black"; }
+                else { s.innerText = "OK"; s.className = "bg-emerald-500 px-3 py-1 rounded-full text-[9px] font-black"; }
             }
         }
 
-        // CRIATIVOS
+        // VIDEO
         function calcVid() {
-            const imp = parseFloat(document.getElementById('vImp').value) || 0;
-            const plays = parseFloat(document.getElementById('vPlays').value) || 0;
-            if(imp > 0) {
-                const hook = (plays / imp) * 100;
-                document.getElementById('resHook').innerText = hook.toFixed(1) + "%";
-                document.getElementById('resHold').innerText = (hook * 0.35).toFixed(1) + "%"; // Simulação hold
+            const i = parseFloat(document.getElementById('vImp').value) || 0;
+            const p = parseFloat(document.getElementById('v3s').value) || 0;
+            if(i > 0) {
+                const hook = (p / i) * 100;
+                document.getElementById('rHook').innerText = hook.toFixed(1) + "%";
+                document.getElementById('rHold').innerText = (hook * 0.4).toFixed(1) + "%";
             }
         }
 
         // ROAS
         function calcRoas() {
-            const p = parseFloat(document.getElementById('rPreco').value) || 0;
-            const c = parseFloat(document.getElementById('rCusto').value) || 0;
+            const p = parseFloat(document.getElementById('rPre').value) || 0;
+            const c = parseFloat(document.getElementById('rCus').value) || 0;
             if(p - c > 0) { document.getElementById('resRoas').innerText = (p / (p - c)).toFixed(2); }
-        }
-
-        // MER
-        function calcMer() {
-            const f = parseFloat(document.getElementById('merFat').value) || 0;
-            const i = parseFloat(document.getElementById('merInv').value) || 0;
-            if(i > 0) { document.getElementById('resMer').innerText = (f / i).toFixed(2); }
         }
     </script>
 </body>
