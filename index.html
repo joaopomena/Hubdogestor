@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GestorHub | @joaopomena</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .active-tab { border-bottom: 3px solid #3b82f6; color: #3b82f6; background: #eff6ff; }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-20">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-600 p-1.5 rounded-xl shadow-lg shadow-blue-200">
+                    <i data-lucide="zap" class="text-white w-5 h-5"></i>
+                </div>
+                <span class="font-extrabold text-slate-800 text-lg tracking-tight">GestorHub</span>
+            </div>
+            <a href="https://instagram.com/joaopomena" target="_blank" class="bg-slate-100 px-3 py-1.5 rounded-full text-[10px] font-bold text-slate-600 hover:bg-blue-50 transition-all uppercase tracking-wider">@joaopomena</a>
+        </div>
+        
+        <nav class="max-w-md mx-auto flex overflow-x-auto border-t border-slate-100 no-scrollbar">
+            <button onclick="openTab('taxa')" id="btn-taxa" class="flex-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 active-tab transition-all">Taxas</button>
+            <button onclick="openTab('pacing')" id="btn-pacing" class="flex-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-all">Pacing</button>
+            <button onclick="openTab('roas')" id="btn-roas" class="flex-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-all">ROAS</button>
+            <button onclick="openTab('utm')" id="btn-utm" class="flex-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-all">UTM</button>
+            <button onclick="openTab('check')" id="btn-check" class="flex-none px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-all">Checklist</button>
+        </nav>
+    </header>
+
+    <main class="max-w-md mx-auto p-4 mt-2">
+
+        <section id="taxa" class="tab-content active">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100">
+                <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
+                    <i data-lucide="percent" class="w-6 h-6 text-blue-500"></i> Impostos Meta 2026
+                </h2>
+                <div class="space-y-5">
+                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Valor de Mídia Desejado</label>
+                    <input type="number" id="vMeta" oninput="calcMeta()" placeholder="R$ 0,00" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-3xl text-2xl font-bold focus:border-blue-500 focus:outline-none transition-all">
+                    
+                    <div class="bg-slate-900 rounded-[2rem] p-6 text-white shadow-inner">
+                        <div class="flex justify-between text-xs opacity-60 mb-2"><span>Imposto (12.5%)</span><span id="jMeta">R$ 0,00</span></div>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-800">
+                            <span class="font-bold text-slate-400 uppercase text-[10px]">Total Fatura</span>
+                            <span id="tMeta" class="text-3xl font-black text-blue-400 leading-none">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pacing" class="tab-content">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100 text-center">
+                <i data-lucide="trending-up" class="w-10 h-10 text-blue-500 mx-auto mb-4"></i>
+                <h2 class="text-xl font-black text-slate-800 mb-6">Ritmo de Gasto Diário</h2>
+                <div class="space-y-4 text-left">
+                    <input type="number" id="pTot" oninput="calcPac()" placeholder="Verba Total (R$)" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="number" id="pGas" oninput="calcPac()" placeholder="Já gasto (R$)" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                        <input type="number" id="pDia" oninput="calcPac()" placeholder="Dia do Mês" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                    </div>
+                    <div id="pRes" class="bg-blue-600 rounded-3xl p-6 text-white hidden">
+                        <p class="text-[10px] uppercase font-bold opacity-70">Gasto Sugerido/Dia</p>
+                        <div id="pIde" class="text-3xl font-black">R$ 0,00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roas" class="tab-content">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100">
+                <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
+                    <i data-lucide="target" class="w-6 h-6 text-emerald-500"></i> Break-even ROAS
+                </h2>
+                <div class="space-y-4">
+                    <input type="number" id="rPre" oninput="calcRoas()" placeholder="Preço do Produto (R$)" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                    <input type="number" id="rCus" oninput="calcRoas()" placeholder="Custo/Imposto (R$)" class="w-full p-4 bg-slate-50 border rounded-2xl font-bold">
+                    <div class="bg-emerald-500 rounded-3xl p-6 text-white text-center">
+                        <p class="text-[10px] uppercase font-bold opacity-80">ROAS de Equilíbrio</p>
+                        <div id="rFin" class="text-5xl font-black">0.0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="utm" class="tab-content">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100">
+                <h2 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
+                    <i data-lucide="link" class="w-6 h-6 text-indigo-500"></i> Gerador de UTM
+                </h2>
+                <div class="space-y-3">
+                    <input type="text" id="uUrl" placeholder="URL do Site (ex: meusite.com.br)" class="w-full p-3 bg-slate-50 border rounded-xl">
+                    <input type="text" id="uSou" placeholder="Origem (ex: facebook, google)" class="w-full p-3 bg-slate-50 border rounded-xl">
+                    <input type="text" id="uMed" placeholder="Mídia (ex: cpc, story)" class="w-full p-3 bg-slate-50 border rounded-xl">
+                    <input type="text" id="uCam" placeholder="Campanha (ex: natal_2026)" class="w-full p-3 bg-slate-50 border rounded-xl">
+                    
+                    <button onclick="genUtm()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-indigo-100 active:scale-95 transition-all">Gerar Link</button>
+                    
+                    <div id="uResBox" class="hidden mt-4">
+                        <p class="text-[10px] font-bold text-slate-400 mb-1 uppercase tracking-widest">Link Rastreável:</p>
+                        <textarea id="uRes" readonly class="w-full p-3 bg-slate-100 text-[11px] border rounded-xl h-20 text-slate-600 focus:outline-none"></textarea>
+                        <button onclick="copyUtm()" class="w-full bg-slate-800 text-white mt-2 py-2 rounded-xl text-xs font-bold">Copiar Link</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="check" class="tab-content">
+            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100">
+                <h2 class="text-xl font-black text-slate-800 mb-2">Checklist Launch</h2>
+                <div class="w-full bg-slate-100 h-2 rounded-full mb-6 overflow-hidden">
+                    <div id="progress" class="bg-blue-600 h-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                
+                <div id="checkItems" class="space-y-3">
+                    </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center mt-4">
+        <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em]">Gestor Toolkit • @joaopomena</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function openTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-tab'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('btn-'+id).classList.add('active-tab');
+        }
+
+        const fmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        // Taxas
+        function calcMeta() {
+            const v = parseFloat(document.getElementById('vMeta').value) || 0;
+            document.getElementById('jMeta').innerText = fmt.format(v * 0.125);
+            document.getElementById('tMeta').innerText = fmt.format(v * 1.125);
+        }
+
+        // Pacing
+        function calcPac() {
+            const t = parseFloat(document.getElementById('pTot').value) || 0;
+            const g = parseFloat(document.getElementById('pGas').value) || 0;
+            const d = parseInt(document.getElementById('pDia').value) || 1;
+            if(t > 0) {
+                document.getElementById('pRes').classList.remove('hidden');
+                const ideal = (t - g) / (31 - d + 1);
+                document.getElementById('pIde').innerText = fmt.format(ideal > 0 ? ideal : 0);
+            }
+        }
+
+        // ROAS
+        function calcRoas() {
+            const p = parseFloat(document.getElementById('rPre').value) || 0;
+            const c = parseFloat(document.getElementById('rCus').value) || 0;
+            document.getElementById('rFin').innerText = (p / (p - c)).toFixed(2);
+        }
+
+        // UTM
+        function genUtm() {
+            const url = document.getElementById('uUrl').value;
+            const sou = document.getElementById('uSou').value;
+            const med = document.getElementById('uMed').value;
+            const cam = document.getElementById('uCam').value;
+            if(!url) return alert('Insira a URL');
+            const link = `${url}?utm_source=${sou}&utm_medium=${med}&utm_campaign=${cam}`;
+            document.getElementById('uRes').value = link;
+            document.getElementById('uResBox').classList.remove('hidden');
+        }
+
+        function copyUtm() {
+            const copyText = document.getElementById("uRes");
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Copiado!");
+        }
+
+        // Checklist
+        const items = ["Pixel/API validado", "Públicos criados", "Copys revisadas", "Criativos aprovados", "Links de UTM ok", "Página de vendas ok"];
+        const listDiv = document.getElementById('checkItems');
+        items.forEach((item, i) => {
+            listDiv.innerHTML += `
+                <label class="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl cursor-pointer hover:bg-slate-100 transition-all border border-transparent active:border-blue-200">
+                    <input type="checkbox" onchange="updateCheck()" class="w-5 h-5 accent-blue-600">
+                    <span class="text-sm font-semibold text-slate-700">${item}</span>
+                </label>
+            `;
+        });
+
+        function updateCheck() {
+            const total = document.querySelectorAll('input[type="checkbox"]').length;
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            document.getElementById('progress').style.width = (checked/total)*100 + '%';
+        }
+    </script>
+</body>
+</html>
